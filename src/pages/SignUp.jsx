@@ -1,13 +1,17 @@
 import { useFormik } from 'formik';
-import React from 'react'
+import React, { useState } from 'react'
 import * as Yup from 'yup'
-import { Button, Container, Form , Label} from 'semantic-ui-react'
+import { Button, Container, Form, Label } from 'semantic-ui-react'
 import { UserService } from '../services/UserService';
+import { json, useNavigate } from 'react-router-dom';
 
 
 export default function SignUp() {
 
     const userService = new UserService();
+    const navigate = useNavigate();
+    let [data, setData] = useState({ success: false, message: "", data: {} });
+
     const formik = useFormik(
         {
             initialValues: {
@@ -22,9 +26,18 @@ export default function SignUp() {
                 password: Yup.string().required("Required"),
                 cpassword: Yup.string().required("Required")
             }),
-            onSubmit: (values) => {
-                console.log(values);
-                userService.addUser(values)
+            onSubmit: async (values) => {
+
+                userService.addUser(values).then(result => {
+
+                    setData(result.data)
+
+                    console.log(result.data.message);
+
+                    if (result.data.success) {
+                        navigate("/login")
+                    }
+                })
             }
         }
     )
@@ -86,6 +99,9 @@ export default function SignUp() {
                     {formik.touched.cpassword && formik.errors.cpassword ? <Label pointing basic color='red' mini >{formik.errors.cpassword}</Label> : null}
                 </Form.Field>
                 <Button type='submit' primary>Submit</Button>
+                {!data.success ? <p>{data.message}</p> : null}
+
+
             </Form>
 
         </Container>
