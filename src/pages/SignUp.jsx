@@ -26,13 +26,11 @@ export default function SignUp() {
                 password: Yup.string().required("Required"),
                 cpassword: Yup.string().required("Required")
             }),
-            onSubmit: async (values) => {
+            onSubmit:  (values) => {
 
                 userService.addUser(values).then(result => {
 
                     setData(result.data)
-
-                    console.log(result.data.message);
 
                     if (result.data.success) {
                         navigate("/login")

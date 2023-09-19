@@ -3,6 +3,7 @@ import Navi from './Navi'
 import { Route, Routes } from 'react-router-dom'
 import SignUp from '../pages/SignUp'
 import LogIn from '../pages/LogIn'
+import Homepage from '../pages/Homepage'
 
 export default function Dashboard() {
   return (
@@ -10,10 +11,11 @@ export default function Dashboard() {
 
       <Navi />
 
-      <Routes>
+      <Routes >
         
         <Route path="signup" Component={SignUp} />
         <Route path="login" Component={LogIn} />
+        <Route path="homepage" Component={Homepage} />
         
       </Routes>
 

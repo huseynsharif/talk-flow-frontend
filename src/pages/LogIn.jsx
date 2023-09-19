@@ -17,23 +17,20 @@ export default function LogIn() {
     {
       initialValues: {
         nickname: "",
-        email: "",
-        password: "",
-        cpassword: ""
+        password: ""
       },
       validationSchema: Yup.object({
-        email: Yup.string().email("Invalid email adress.").required("Required"),
+        nickname: Yup.string().required("Required"),
         password: Yup.string().required("Required"),
       }),
       onSubmit: (values) => {
-        userService.checkEmailAndPassword(values).then(result => {
+        console.log(values);
+        userService.login(values).then(result => {
           setData(result.data);
-
+          console.log(result.data);
           if (result.data.success) {
-              navigate("/")
+              navigate("/homepage")
           }
-          
-
         })
       }
     }
@@ -44,17 +41,17 @@ export default function LogIn() {
       <Form onSubmit={formik.handleSubmit} style={{ width: "400px" }} >
 
         <Form.Field>
-          <label>Email</label>
+          <label>Nickname</label>
           <input
-            id='email'
-            placeholder='Email'
-            type='email'
+            id='nickname'
+            placeholder='Nickname'
+            type='text'
             onChange={formik.handleChange}
-            value={formik.values.email}
+            value={formik.values.nickname}
             onBlur={formik.handleBlur}
 
           />
-          {formik.touched.email && formik.errors.email ? <Label pointing basic color='red' mini>{formik.errors.email}</Label> : null}
+          {formik.touched.nickname && formik.errors.nickname ? <Label pointing basic color='red' mini>{formik.errors.nickname}</Label> : null}
         </Form.Field>
         <Form.Field>
           <label>Password</label>
