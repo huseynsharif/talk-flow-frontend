@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import * as Yup from 'yup'
 import { Button, Container, Form, Label } from 'semantic-ui-react'
 import { UserService } from '../services/UserService';
-import { json, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
 export default function SignUp() {
@@ -15,13 +15,13 @@ export default function SignUp() {
     const formik = useFormik(
         {
             initialValues: {
-                nickname: "",
+                username: "",
                 email: "",
                 password: "",
                 cpassword: ""
             },
             validationSchema: Yup.object({
-                nickname: Yup.string().min(2, "Must be 2 character or more.").max(15, "Must be 15 character or less.").required("Required"),
+                username: Yup.string().min(2, "Must be 2 character or more.").max(15, "Must be 15 character or less.").required("Required"),
                 email: Yup.string().email("Invalid email adress.").required("Required"),
                 password: Yup.string().required("Required"),
                 cpassword: Yup.string().required("Required")
@@ -47,15 +47,15 @@ export default function SignUp() {
                 <Form.Field>
                     <label>Nickname</label>
                     <input
-                        id='nickname'
-                        placeholder='Nickname'
+                        id='username'
+                        placeholder='Username'
                         type='text'
                         onChange={formik.handleChange}
-                        value={formik.values.nickname}
+                        value={formik.values.username}
                         onBlur={formik.handleBlur}
 
                     />
-                    {formik.touched.nickname && formik.errors.nickname ? <Label pointing basic color='red' mini>{formik.errors.nickname}</Label> : null}
+                    {formik.touched.username && formik.errors.username ? <Label pointing basic color='red' mini>{formik.errors.username}</Label> : null}
                 </Form.Field>
                 <Form.Field>
                     <label>Email</label>

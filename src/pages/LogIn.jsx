@@ -16,18 +16,16 @@ export default function LogIn() {
   const formik = useFormik(
     {
       initialValues: {
-        nickname: "",
+        username: "",
         password: ""
       },
       validationSchema: Yup.object({
-        nickname: Yup.string().required("Required"),
+        username: Yup.string().required("Required"),
         password: Yup.string().required("Required"),
       }),
       onSubmit: (values) => {
-        console.log(values);
         userService.login(values).then(result => {
           setData(result.data);
-          console.log(result.data);
           if (result.data.success) {
               navigate("/homepage")
           }
@@ -41,17 +39,17 @@ export default function LogIn() {
       <Form onSubmit={formik.handleSubmit} style={{ width: "400px" }} >
 
         <Form.Field>
-          <label>Nickname</label>
+          <label>Username</label>
           <input
-            id='nickname'
-            placeholder='Nickname'
+            id='username'
+            placeholder='Username'
             type='text'
             onChange={formik.handleChange}
-            value={formik.values.nickname}
+            value={formik.values.username}
             onBlur={formik.handleBlur}
 
           />
-          {formik.touched.nickname && formik.errors.nickname ? <Label pointing basic color='red' mini>{formik.errors.nickname}</Label> : null}
+          {formik.touched.username && formik.errors.username ? <Label pointing basic color='red' mini>{formik.errors.username}</Label> : null}
         </Form.Field>
         <Form.Field>
           <label>Password</label>
