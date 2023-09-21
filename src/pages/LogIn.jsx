@@ -1,5 +1,5 @@
 import { useFormik } from 'formik';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import * as Yup from 'yup'
 import { Button, Container, Form, Label } from 'semantic-ui-react'
 import { UserService } from '../services/UserService';
@@ -10,8 +10,11 @@ export default function LogIn() {
 
   const userService = new UserService();
   const navigate = useNavigate();
-  let [data, setData] = useState({ success: false, message: "", data: {} });
+  let [loginResult, setLoginResult] = useState({ success: false, message: "", data: {} });
 
+  // useEffect(() => {
+  //   localStorage.setItem('loginResult', JSON.stringify(loginResult));
+  // }, loginResult)
 
   const formik = useFormik(
     {
@@ -21,14 +24,16 @@ export default function LogIn() {
       },
       validationSchema: Yup.object({
         username: Yup.string().required("Required"),
+
         password: Yup.string().required("Required"),
       }),
       onSubmit: (values) => {
         userService.login(values).then(result => {
-          setData(result.data);
+          setLoginResult(result.data);
+          localStorage.setItem('token', JSON.stringify(result.data.data.token));
           if (result.data.success) {
-              navigate("/homepage")
-          }
+            navigate("/homepage")
+          }         
         })
       }
     }
@@ -38,7 +43,7 @@ export default function LogIn() {
     <div> <Container style={{ display: "flex", justifyContent: "center", marginTop: "20px", marginBottom: "200px" }}>
       <Form onSubmit={formik.handleSubmit} style={{ width: "400px" }} >
 
-        <Form.Field>
+        <Form.Field >
           <label>Username</label>
           <input
             id='username'
@@ -47,7 +52,6 @@ export default function LogIn() {
             onChange={formik.handleChange}
             value={formik.values.username}
             onBlur={formik.handleBlur}
-
           />
           {formik.touched.username && formik.errors.username ? <Label pointing basic color='red' mini>{formik.errors.username}</Label> : null}
         </Form.Field>
@@ -60,13 +64,12 @@ export default function LogIn() {
             onChange={formik.handleChange}
             value={formik.values.password}
             onBlur={formik.handleBlur}
-
           />
           {formik.touched.password && formik.errors.password ? <Label pointing basic color='red' mini>{formik.errors.password}</Label> : null}
         </Form.Field>
 
         <Button type='submit' primary>Submit</Button>
-        {!data.success ? <p>{data.message}</p> : null}
+        {!loginResult.success ? <p>{loginResult.message}</p> : null}
 
       </Form>
 

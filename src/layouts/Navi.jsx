@@ -12,11 +12,11 @@ export default function Navi() {
         <Menu size='huge'>
             <Menu.Menu>
                 <Menu.Item
-                    name='home' 
+                    name='home'
                     onClick={() => navigate("/homepage")}
                 />
-                <Menu.Item  
-                    name='message' 
+                <Menu.Item
+                    name='message'
                     onClick={() => navigate("/message")}
                 />
             </Menu.Menu>
@@ -32,7 +32,18 @@ export default function Navi() {
                     <Link to={"/login"}>
                         <Button>Log in</Button>
                     </Link>
+
                 </Menu.Item>
+
+                <Menu.Item>
+
+                    <Link to={"/getall"}>
+                        <Button>Get all</Button>
+                    </Link>
+
+                </Menu.Item>
+
+
             </Menu.Menu>
         </Menu>
     )
