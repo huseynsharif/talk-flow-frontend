@@ -1,24 +1,36 @@
 import axios from "axios";
 
+
+const defaultUrl = "http://192.168.0.103:8080/api/";
+
 const getToken = () => {
-    console.log(localStorage.getItem("token"));
-    return localStorage.getItem("token");
+
+    const token =  localStorage.getItem("token");
+
+    if(token==null){
+        return null;
+    }
+    else{
+        return token.slice(1, -1)
+    }
+
 }
+
+
 
 export class UserService {
     addUser(user) {
         try {
-            const response =  axios.post(
-                    "http://localhost:8080/api/auth/add",
-                    user,
-                    {
-                        headers: {
-                            'Content-Type': 'application/json'
-
-                        }
+            const response = axios.post(
+                defaultUrl + "auth/add",
+                user,
+                {
+                    headers: {
+                        'Content-Type': 'application/json'
                     }
-                );
-    
+                }
+            );
+
             return response;
         } catch (error) {
             throw error;
@@ -27,11 +39,11 @@ export class UserService {
 
     login(loginRequest) {
         try {
-            const response =  axios.post(
-                    "http://localhost:8080/api/auth/login",
-                    loginRequest
-                );
-    
+            const response = axios.post(
+                defaultUrl + "auth/login",
+                loginRequest
+            );
+
             return response;
         } catch (error) {
             throw error;
@@ -41,17 +53,19 @@ export class UserService {
     getall() {
         try {
 
-            getToken();
+            console.log(getToken());
 
-            const response =  axios.get(
-                    "http://localhost:8080/api/users/getall",
-                    {headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization':'Bearer ' + getToken()
+            const response = axios.get(
+                defaultUrl + "users/getall",
+                {
+                    headers: {
+                        'Authorization': 'Bearer ' + getToken(),
+                        'Content-Type': 'application/json'
                         
-                    }}
-                );
-    
+                    }
+                }
+            );
+
             return response;
         } catch (error) {
             throw error;

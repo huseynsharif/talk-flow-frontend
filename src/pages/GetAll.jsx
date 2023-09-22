@@ -10,7 +10,6 @@ export default function GetAll() {
             let userService = new UserService();
 
             userService.getall().then(result => setUsers(result.data.data));
-            console.log(users);
         }, []
     );
     return (

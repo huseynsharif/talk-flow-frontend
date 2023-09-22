@@ -25,7 +25,7 @@ export default function LogIn() {
       validationSchema: Yup.object({
         username: Yup.string().required("Required"),
 
-        password: Yup.string().required("Required"),
+        password: Yup.string().required("Required")
       }),
       onSubmit: (values) => {
         userService.login(values).then(result => {
