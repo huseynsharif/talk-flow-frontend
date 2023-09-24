@@ -1,22 +1,14 @@
 import axios from "axios";
+import { API_BASE_URL } from "../constants/apiConstants";
 
 
-const defaultUrl = "http://192.168.0.103:8080/api/";
+const defaultUrl = API_BASE_URL + "/api/";
 
 const getToken = () => {
 
-    const token =  localStorage.getItem("token");
-
-    if(token==null){
-        return null;
-    }
-    else{
-        return token.slice(1, -1)
-    }
+    return localStorage.getItem("token");
 
 }
-
-
 
 export class UserService {
     addUser(user) {
@@ -49,28 +41,4 @@ export class UserService {
             throw error;
         }
     }
-
-    getall() {
-        try {
-
-            console.log(getToken());
-
-            const response = axios.get(
-                defaultUrl + "users/getall",
-                {
-                    headers: {
-                        'Authorization': 'Bearer ' + getToken(),
-                        'Content-Type': 'application/json'
-                        
-                    }
-                }
-            );
-
-            return response;
-        } catch (error) {
-            throw error;
-        }
-    }
-
-
 }

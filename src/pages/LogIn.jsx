@@ -5,16 +5,12 @@ import { Button, Container, Form, Label } from 'semantic-ui-react'
 import { UserService } from '../services/UserService';
 import { useNavigate } from 'react-router-dom';
 
-
 export default function LogIn() {
 
   const userService = new UserService();
   const navigate = useNavigate();
   let [loginResult, setLoginResult] = useState({ success: false, message: "", data: {} });
 
-  // useEffect(() => {
-  //   localStorage.setItem('loginResult', JSON.stringify(loginResult));
-  // }, loginResult)
 
   const formik = useFormik(
     {
@@ -30,10 +26,14 @@ export default function LogIn() {
       onSubmit: (values) => {
         userService.login(values).then(result => {
           setLoginResult(result.data);
-          localStorage.setItem('token', JSON.stringify(result.data.data.token));
+          
+          localStorage.setItem('id', JSON.stringify(result.data.data.id));
+          localStorage.setItem('username', JSON.stringify(result.data.data.username).slice(1, -1));
+          localStorage.setItem('token', JSON.stringify(result.data.data.token).slice(1, -1));
+
           if (result.data.success) {
             navigate("/homepage")
-          }         
+          }
         })
       }
     }

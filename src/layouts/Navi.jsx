@@ -1,13 +1,13 @@
 import React from 'react'
-import { Button, Menu } from 'semantic-ui-react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Menu } from 'semantic-ui-react'
+import {useNavigate } from 'react-router-dom'
+import SignedOut from './SignedOut';
 
 
 export default function Navi() {
 
     const navigate = useNavigate();
-
-
+    
     return (
         <Menu size='huge'>
             <Menu.Menu>
@@ -16,35 +16,15 @@ export default function Navi() {
                     onClick={() => navigate("/homepage")}
                 />
                 <Menu.Item
-                    name='message'
-                    onClick={() => navigate("/message")}
+                    name='room'
+                    onClick={() => navigate("/rooms")}
+                />
+                <Menu.Item
+                    name='Chat'
+                    onClick={() => navigate("/chat")}
                 />
             </Menu.Menu>
-
-
-            <Menu.Menu position='right'>
-                <Menu.Item>
-                    <Link to={"/signup"}>
-                        <Button primary>Sign Up</Button>
-                    </Link>
-                </Menu.Item>
-                <Menu.Item>
-                    <Link to={"/login"}>
-                        <Button>Log in</Button>
-                    </Link>
-
-                </Menu.Item>
-
-                <Menu.Item>
-
-                    <Link to={"/getall"}>
-                        <Button>Get all</Button>
-                    </Link>
-
-                </Menu.Item>
-
-
-            </Menu.Menu>
-        </Menu>
+            <Menu.Menu position='right'><SignedOut/></Menu.Menu>   
+            </Menu>
     )
 }
