@@ -10,7 +10,7 @@ export default function LogIn() {
   const userService = new UserService();
   const navigate = useNavigate();
   let [loginResult, setLoginResult] = useState({ success: false, message: "", data: {} });
-
+  const [isLoading, setIsLoading] = useState(false);
 
   const formik = useFormik(
     {
@@ -24,13 +24,14 @@ export default function LogIn() {
         password: Yup.string().required("Required")
       }),
       onSubmit: (values) => {
+        setIsLoading(true);
         userService.login(values).then(result => {
           setLoginResult(result.data);
           
           localStorage.setItem('id', JSON.stringify(result.data.data.id));
           localStorage.setItem('username', JSON.stringify(result.data.data.username).slice(1, -1));
           localStorage.setItem('token', JSON.stringify(result.data.data.token).slice(1, -1));
-
+          setIsLoading(false);
           if (result.data.success) {
             navigate("/homepage")
           }
@@ -68,7 +69,7 @@ export default function LogIn() {
           {formik.touched.password && formik.errors.password ? <Label pointing basic color='red' mini>{formik.errors.password}</Label> : null}
         </Form.Field>
 
-        <Button type='submit' primary>Submit</Button>
+        <Button type='submit' primary disabled = {isLoading}>Submit</Button>
         {!loginResult.success ? <p>{loginResult.message}</p> : null}
 
       </Form>

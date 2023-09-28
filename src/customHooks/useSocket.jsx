@@ -1,68 +1,79 @@
 import React, { useEffect, useState } from 'react'
 import { io } from 'socket.io-client';
 import { SOCKET_BASE_URL } from '../constants/apiConstants';
+import { socket } from './socket';
+import { ConnectionManager } from './ConnectionManager';
 
 
 export default function useSocket() {
-    const [socket, setSocket] = useState(null);
-    const [messages, setMessages] = useState([]);
-    const [message, setMessage] = useState('');
-    let room = "test"
+  //const [socket, setSocket] = useState(null);
+  const [messages, setMessages] = useState([]);
+  const [message, setMessage] = useState('');
+  const [isConnected, setIsConnected] = useState(false);
+  let room = "test"
 
 
-    useEffect(() => {
+  useEffect(() => {
 
-        if (!socket) {
-            const newSocket = io(SOCKET_BASE_URL, {
-                query: { room },
-            });
+      function onConnect() {
+        setIsConnected(true);
+        console.log("connected");
+      }
 
-            newSocket.on('connect', () => {
-                console.log('connected');
-            });
+      function onDisconnect() {
+        setIsConnected(false);
+        console.log("disconnected");
+      }
 
-            newSocket.on('get_message', (receivedMessage) => {
-                setMessages((prevMessages) => [...prevMessages, receivedMessage.message]);
-            }
-            );
+      function onMessageRecived(receivedMessage) {
+        setMessages((prevMessages) => [...prevMessages, receivedMessage.content]);
+      }
+      socket.on('connect', onConnect);
+      socket.on('disconnect', onDisconnect);
+      socket.on('get_message', onMessageRecived);
+     
 
-            setSocket(newSocket);
+      return () => {
+        socket.off('connect', onConnect);
+        socket.off('disconnect', onDisconnect);
+        socket.off('get_message', onMessageRecived);
+      };
+    
 
-            return () => {
-                newSocket.disconnect();
-            };
-        }
+  }, [socket, room]
+  );
 
-    }, [socket, room]
-    );
+  const sendMessage = () => {
+    if (socket && message) {
+      console.log(message);
+      console.log(socket);
+      console.log(isConnected);
+      socket.timeout(5000).emit('send_message', {
+        content: message
+      }, () => {
+        console.log("Mesaj getdi.");
+      });
+      setMessage('');
+    }
+  };
 
-    const sendMessage = () => {
-        if (socket && message) {
-            console.log(message);
-            console.log(socket);
-            socket.emit('send_message', {
-                "content": "salam"
-            });
-            setMessage('');
-        }
-    };
-
-    return (
-        <div>
-            <div>
-                {messages.map((m, id) => (
-                    <div key={id}>
-                        <p>{m}</p>
-                    </div>
-                ))}
-            </div>
-            <input
-                type="text"
-                value={message}
-                onChange={(value) => setMessage(value.target.value)}
-            />
-            <button onClick={() => sendMessage()}>Send</button>
-        </div>
-    );
+  return (
+    <div>
+      <ConnectionManager/>
+      <div>
+        {messages.map((m, id) => (
+          <div key={id}>
+            <p>{m}</p>
+          </div>
+        ))}
+      </div>
+      <input
+        type="text"
+        value={message}
+        onChange={(value) => setMessage(value.target.value)}
+      />
+      <button onClick={sendMessage}>Send</button>
+    </div>
+  );
 
 }
