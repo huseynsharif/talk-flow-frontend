@@ -11,6 +11,8 @@ export default function SignUp() {
     const userService = new UserService();
     const navigate = useNavigate();
     let [data, setData] = useState({ success: false, message: "", data: {} });
+    const [isLoading, setIsLoading] = useState(false);
+
 
     const formik = useFormik(
         {
@@ -27,11 +29,11 @@ export default function SignUp() {
                 cpassword: Yup.string().required("Required")
             }),
             onSubmit:  (values) => {
-
+                setIsLoading(true)
                 userService.addUser(values).then(result => {
 
                     setData(result.data)
-
+                    setIsLoading(false)
                     if (result.data.success) {
                         navigate("/login")
                     }
@@ -96,7 +98,7 @@ export default function SignUp() {
                     />
                     {formik.touched.cpassword && formik.errors.cpassword ? <Label pointing basic color='red' mini >{formik.errors.cpassword}</Label> : null}
                 </Form.Field>
-                <Button type='submit' primary>Submit</Button>
+                <Button type='submit' primary disabled={isLoading}>Submit</Button>
                 {!data.success ? <p>{data.message}</p> : null}
 
 

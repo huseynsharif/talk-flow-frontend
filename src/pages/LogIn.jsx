@@ -31,6 +31,8 @@ export default function LogIn() {
           localStorage.setItem('id', JSON.stringify(result.data.data.id));
           localStorage.setItem('username', JSON.stringify(result.data.data.username).slice(1, -1));
           localStorage.setItem('token', JSON.stringify(result.data.data.token).slice(1, -1));
+          localStorage.setItem('isLoggedIn', JSON.stringify(true));
+          
           setIsLoading(false);
           if (result.data.success) {
             navigate("/homepage")

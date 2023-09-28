@@ -28,6 +28,7 @@ export default function useSocket() {
       function onMessageRecived(receivedMessage) {
         setMessages((prevMessages) => [...prevMessages, receivedMessage.content]);
       }
+      
       socket.on('connect', onConnect);
       socket.on('disconnect', onDisconnect);
       socket.on('get_message', onMessageRecived);
