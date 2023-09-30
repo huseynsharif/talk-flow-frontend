@@ -15,7 +15,7 @@ export default function Rooms() {
       roomName: Yup.string().required("Required")
     }),
     onSubmit: (values) => {
-      
+      localStorage.setItem('room-name', JSON.stringify(values.roomName).slice(1, -1))
     }
     
   });
@@ -38,7 +38,7 @@ export default function Rooms() {
       <Form.Field inline>
       {formik.touched.roomName && formik.errors.roomName ? <Label pointing basic color='red' mini>{formik.errors.roomName}</Label> : null}
       </Form.Field>
-      <Button type='submit' primary>Join</Button>
+      <Button type='submit' primary disabled={!formik.values.roomName}>Join</Button>
 
     </Form>
 

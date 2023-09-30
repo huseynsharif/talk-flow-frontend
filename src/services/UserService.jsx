@@ -2,7 +2,6 @@ import axios from "axios";
 import { API_BASE_URL } from "../constants/apiConstants";
 
 
-const defaultUrl = API_BASE_URL + "/api/";
 
 const getToken = () => {
 
@@ -14,7 +13,7 @@ export class UserService {
     addUser(user) {
         try {
             const response = axios.post(
-                defaultUrl + "auth/add",
+                API_BASE_URL + "/auth/add",
                 user,
                 {
                     headers: {
@@ -32,7 +31,7 @@ export class UserService {
     login(loginRequest) {
         try {
             const response = axios.post(
-                defaultUrl + "auth/login",
+                API_BASE_URL + "/auth/login",
                 loginRequest
             );
 

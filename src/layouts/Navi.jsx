@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Menu } from 'semantic-ui-react'
 import { useNavigate } from 'react-router-dom'
 import SignedOut from './SignedOut';
@@ -8,24 +8,11 @@ import SignedIn from './SignedIn';
 export default function Navi() {
 
     const navigate = useNavigate();
-    // let [isLoggedIn, setIsLoggedIn] = useState(false);
-    // useEffect(
-    //     () => {
-    //         let a = localStorage.getItem('isLoggedIn');
-    //         if (a) {
-    //             setIsLoggedIn(a);
-    //         }
-    //         else {
-    //             setIsLoggedIn(false)
-    //         }
-
-    //     }, []
-    // )
 
     let isLoggedIn = localStorage.getItem('isLoggedIn')
     return (
 
-        <Menu size='huge'>
+        <Menu size='huge' className='nav'>
             <Menu.Menu>
                 <Menu.Item
                     name='home'
@@ -37,7 +24,7 @@ export default function Navi() {
                 />
                 <Menu.Item
                     name='Chat'
-                    onClick={() => navigate("/chat")}
+                    onClick={() => navigate("/chatroom")}
                 />
             </Menu.Menu>
             <Menu.Menu position='right'>

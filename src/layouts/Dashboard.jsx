@@ -7,7 +7,7 @@ import Homepage from '../pages/Homepage'
 
 import NotFoundPage from '../pages/NotFoundPage'
 import Rooms from '../pages/Rooms'
-import useSocket from '../customHooks/useSocket'
+import ChatRoom from '../pages/ChatRoom'
 
 export default function Dashboard() {
   return (
@@ -23,7 +23,7 @@ export default function Dashboard() {
         <Route path="rooms" Component={Rooms} />        
         <Route path="/" Component={Homepage} />
         <Route path="*" Component={NotFoundPage} />
-        <Route path="chat" Component={useSocket} />
+        <Route path="chatroom" Component={ChatRoom} />
         
         
       </Routes>

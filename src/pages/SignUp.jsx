@@ -98,7 +98,7 @@ export default function SignUp() {
                     />
                     {formik.touched.cpassword && formik.errors.cpassword ? <Label pointing basic color='red' mini >{formik.errors.cpassword}</Label> : null}
                 </Form.Field>
-                <Button type='submit' primary disabled={isLoading}>Submit</Button>
+                <button type='submit' disabled={isLoading} className='login-signup-submit-button'> <span>Sign up</span></button>
                 {!data.success ? <p>{data.message}</p> : null}
 
 

@@ -27,12 +27,12 @@ export default function LogIn() {
         setIsLoading(true);
         userService.login(values).then(result => {
           setLoginResult(result.data);
-          
+
           localStorage.setItem('id', JSON.stringify(result.data.data.id));
           localStorage.setItem('username', JSON.stringify(result.data.data.username).slice(1, -1));
           localStorage.setItem('token', JSON.stringify(result.data.data.token).slice(1, -1));
           localStorage.setItem('isLoggedIn', JSON.stringify(true));
-          
+
           setIsLoading(false);
           if (result.data.success) {
             navigate("/homepage")
@@ -71,7 +71,7 @@ export default function LogIn() {
           {formik.touched.password && formik.errors.password ? <Label pointing basic color='red' mini>{formik.errors.password}</Label> : null}
         </Form.Field>
 
-        <Button type='submit' primary disabled = {isLoading}>Submit</Button>
+        <button type='submit' disabled={isLoading} className='login-signup-submit-button'> <span>Login</span></button>
         {!loginResult.success ? <p>{loginResult.message}</p> : null}
 
       </Form>

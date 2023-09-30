@@ -6,10 +6,7 @@ export default function SignedIn() {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
 
   const handleLogOut = () => {
-    localStorage.setItem('isLoggedIn', JSON.stringify(false))
-    localStorage.removeItem('username');
-    localStorage.removeItem('token');
-    localStorage.removeItem('id');
+    localStorage.clear();
     
     setIsLoggedIn(false)
     window.location.reload();

@@ -11,12 +11,19 @@ export default function SignedOut() {
             <Menu position='right'>
                 <Menu.Item>
                     <Link to={"/signup"}>
-                        <Button primary>Sign Up</Button>
+                        <button class="nav-signup-button">
+                            Sign up
+                            <div class="hoverEffect">
+                                <div>
+                                </div>
+                            </div></button>
                     </Link>
                 </Menu.Item>
                 <Menu.Item>
                     <Link to={"/login"}>
-                        <Button>Log in</Button>
+                        <button class="nav-login-button">
+                            Log in
+                        </button>
                     </Link>
 
                 </Menu.Item>

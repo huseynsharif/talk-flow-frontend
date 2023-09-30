@@ -3,10 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@stomp/stompjs": "^7.0.0",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
-    "antd": "^5.9.2",
+    "antd": "^5.9.4",
     "axios": "^1.5.0",
     "formik": "^2.4.3",
     "react": "^18.2.0",
@@ -17,6 +18,7 @@
     "semantic-ui-react": "^2.1.4",
     "socket.io-client": "^4.7.2",
     "web-vitals": "^2.1.4",
+    "ws": "^8.14.2",
     "yup": "^1.2.0"
   },
   "scripts": {
