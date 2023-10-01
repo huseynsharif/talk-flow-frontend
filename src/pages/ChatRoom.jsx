@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Stomp } from '@stomp/stompjs';
 import { SOCKET_BASE_URL } from '../constants/apiConstants';
-import { Button, Container, Input, Label } from 'semantic-ui-react';
 
 const ChatRoom = () => {
+
     const [stompClient, setStompClient] = useState(null);
     const [messages, setMessages] = useState([]);
     const [messageInput, setMessageInput] = useState('');
@@ -17,7 +17,8 @@ const ChatRoom = () => {
             let roomName = localStorage.getItem('room-name')
             client.subscribe('/topic/message/' + roomName, (message) => {
                 const receivedData = JSON.parse(message.body);
-                setMessages((prevMessages) => [...prevMessages, receivedData.message]);
+                setMessages((prevMessages) => [...prevMessages, receivedData]);
+                console.log(messages);
             });
         });
 
@@ -54,11 +55,19 @@ const ChatRoom = () => {
     };
 
     return (
-        <Container>
+        <div className='chat-box'>
             <h1 className='c'>Chat Room</h1>
             <div className="message-list">
                 {messages.map((msg, index) => (
-                    <div className="mes" key={index}><p>{msg}</p></div>
+                    <div className="card" key={index}>
+                        <p className="card-title">{msg.senderName}</p>
+                        <p className="small-desc">
+                           {msg.message}
+                        </p>
+                        <div className="go-corner">
+                            <div className="go-arrow">→</div>
+                        </div>
+                    </div>
                 ))}
             </div>
             <div className='message-input'>
@@ -80,8 +89,11 @@ const ChatRoom = () => {
 
                 </div>
             </div>
-        </Container>
+
+        </div>
     );
 };
 
 export default ChatRoom;
+
+

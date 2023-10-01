@@ -1,9 +1,10 @@
 import { useFormik } from 'formik';
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import * as Yup from 'yup'
-import { Button, Container, Form, Label } from 'semantic-ui-react'
+import { Container, Form, Label } from 'semantic-ui-react'
 import { UserService } from '../services/UserService';
 import { useNavigate } from 'react-router-dom';
+import Loading from '../elements/Loading';
 
 export default function LogIn() {
 
@@ -20,24 +21,24 @@ export default function LogIn() {
       },
       validationSchema: Yup.object({
         username: Yup.string().required("Required"),
-
         password: Yup.string().required("Required")
       }),
       onSubmit: (values) => {
         setIsLoading(true);
+        console.log(isLoading);
         userService.login(values).then(result => {
           setLoginResult(result.data);
-
           localStorage.setItem('id', JSON.stringify(result.data.data.id));
           localStorage.setItem('username', JSON.stringify(result.data.data.username).slice(1, -1));
           localStorage.setItem('token', JSON.stringify(result.data.data.token).slice(1, -1));
           localStorage.setItem('isLoggedIn', JSON.stringify(true));
 
-          setIsLoading(false);
+
           if (result.data.success) {
             navigate("/homepage")
           }
         })
+        setIsLoading(false);
       }
     }
   )
@@ -70,10 +71,11 @@ export default function LogIn() {
           />
           {formik.touched.password && formik.errors.password ? <Label pointing basic color='red' mini>{formik.errors.password}</Label> : null}
         </Form.Field>
-
-        <button type='submit' disabled={isLoading} className='login-signup-submit-button'> <span>Login</span></button>
+      
+          <button type='submit' disabled={isLoading} className='login-signup-submit-button'> <span>Login</span></button>
         {!loginResult.success ? <p>{loginResult.message}</p> : null}
 
+        {isLoading ? <Loading /> : null}  {/*ishlemir*/}
       </Form>
 
     </Container></div>
