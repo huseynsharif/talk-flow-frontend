@@ -14,7 +14,6 @@ export default function Dashboard() {
     <div>
 
       <Navi />
-
       <Routes >
         
         <Route path="signup" Component={SignUp} />

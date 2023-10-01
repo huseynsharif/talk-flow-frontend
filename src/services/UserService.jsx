@@ -34,8 +34,9 @@ export class UserService {
                 API_BASE_URL + "/auth/login",
                 loginRequest
             );
-
+            
             return response;
+            
         } catch (error) {
             throw error;
         }

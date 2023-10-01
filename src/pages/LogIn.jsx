@@ -25,7 +25,6 @@ export default function LogIn() {
       }),
       onSubmit: (values) => {
         setIsLoading(true);
-        console.log(isLoading);
         userService.login(values).then(result => {
           setLoginResult(result.data);
           localStorage.setItem('id', JSON.stringify(result.data.data.id));
@@ -33,11 +32,10 @@ export default function LogIn() {
           localStorage.setItem('token', JSON.stringify(result.data.data.token).slice(1, -1));
           localStorage.setItem('isLoggedIn', JSON.stringify(true));
 
-
           if (result.data.success) {
             navigate("/homepage")
           }
-        })
+        }).catch(err => console.log(err))
         setIsLoading(false);
       }
     }

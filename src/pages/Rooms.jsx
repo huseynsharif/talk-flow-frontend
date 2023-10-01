@@ -1,11 +1,15 @@
 import { useFormik } from 'formik'
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Button, Container, Form, Label } from 'semantic-ui-react'
 import * as Yup from 'yup'
 
 
 
 export default function Rooms() {
+
+  const navigate = useNavigate();
+
 
   const formik = useFormik({
     initialValues: {
@@ -16,6 +20,7 @@ export default function Rooms() {
     }),
     onSubmit: (values) => {
       localStorage.setItem('room-name', JSON.stringify(values.roomName).slice(1, -1))
+      navigate('/chatroom')
     }
     
   });

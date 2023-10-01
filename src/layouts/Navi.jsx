@@ -18,13 +18,10 @@ export default function Navi() {
                     name='home'
                     onClick={() => navigate("/homepage")}
                 />
-                <Menu.Item
-                    name='room'
-                    onClick={() => navigate("/rooms")}
-                />
+                
                 <Menu.Item
                     name='Chat'
-                    onClick={() => navigate("/chatroom")}
+                    onClick={() => navigate("/rooms")}
                 />
             </Menu.Menu>
             <Menu.Menu position='right'>

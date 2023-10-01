@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Stomp } from '@stomp/stompjs';
 import { SOCKET_BASE_URL } from '../constants/apiConstants';
 
@@ -7,13 +7,20 @@ const ChatRoom = () => {
     const [stompClient, setStompClient] = useState(null);
     const [messages, setMessages] = useState([]);
     const [messageInput, setMessageInput] = useState('');
+    const messagesEndRef = useRef(null);
+
+    const scrollToBottom = () => {
+        messagesEndRef.current.scrollIntoView({ behavior: "smooth"});
+    };
+
+    useEffect(scrollToBottom, [messages]);
 
     useEffect(() => {
         const socket = new WebSocket(SOCKET_BASE_URL + '/chat');
         const client = Stomp.over(socket);
         client.connect({}, (frame) => {
 
-            setStompClient(client);
+            setStompClient(client)
             let roomName = localStorage.getItem('room-name')
             client.subscribe('/topic/message/' + roomName, (message) => {
                 const receivedData = JSON.parse(message.body);
@@ -65,10 +72,11 @@ const ChatRoom = () => {
                            {msg.message}
                         </p>
                         <div className="go-corner">
-                            <div className="go-arrow">→</div>
+                            <div className="go-arrow"/>
                         </div>
                     </div>
                 ))}
+                <div ref={messagesEndRef} />
             </div>
             <div className='message-input'>
                 <div className="Message">
@@ -86,7 +94,6 @@ const ChatRoom = () => {
                             <path d="M44 256 c-3 -8 -4 -29 -2 -48 3 -31 5 -33 56 -42 28 -5 52 -13 52 -16 0 -3 -24 -11 -52 -16 -52 -9 -53 -9 -56 -48 -2 -21 1 -43 6 -48 10 -10 232 97 232 112 0 7 -211 120 -224 120 -4 0 -9 -6 -12 -14z"></path>
                         </g>
                     </svg><span class="l"></span>
-
                 </div>
             </div>
 
