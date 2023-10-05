@@ -204,6 +204,7 @@ p {
   width: 100%;
   position: fixed;
   z-index: 10;
+  margin-bottom: 510px;
 } */
 
 @keyframes effect {
@@ -343,7 +344,7 @@ p {
 
 /* Chat-box */
 
-.message-list{
+.message-list {
   background: linear-gradient(270deg, #3703f4, #4700a3, #0a3abd);
   width: 80%;
   height: 500px;
@@ -364,7 +365,7 @@ p {
 /* Messages */
 
 .card-title {
-  color: #ffffff;
+  color: #ebc95b;
   font-size: 1.5em;
   line-height: normal;
   font-weight: 700;
@@ -383,7 +384,7 @@ p {
 }
 
 .small-desc {
-  font-size: 1em;
+  font-size: 20px;
 }
 
 .go-corner {
@@ -397,7 +398,7 @@ p {
   top: 0;
   left: 0;
   background: linear-gradient(135deg, #4315ac, #3925ad);
-  border-radius:  4px 0 32px 0;
+  border-radius: 4px 0 32px 0;
   /* box-shadow: inset 0px 0px 15px 1px #ffffff; */
 }
 
@@ -428,6 +429,15 @@ p {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+@media (width <=767px) {
+
+  .card{
+    max-width: 80%;
+  }
+  
+
+}
+
 .card:before {
   content: '';
   position: absolute;
@@ -442,4 +452,3 @@ p {
   transform-origin: 50% 50%;
   transition: transform 0.35s ease-out;
 }
-

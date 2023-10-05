@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Stomp } from '@stomp/stompjs';
 import { SOCKET_BASE_URL } from '../constants/apiConstants';
+import { MessageService } from '../services/MessageService';
 
 const ChatRoom = () => {
 
@@ -8,6 +9,18 @@ const ChatRoom = () => {
     const [messages, setMessages] = useState([]);
     const [messageInput, setMessageInput] = useState('');
     const messagesEndRef = useRef(null);
+    const [room, setRoom] = useState("");
+
+    useEffect(
+        ()=> {
+            setRoom(localStorage.getItem('room-name'))
+            const roomId = localStorage.getItem('room-id')
+            let messageService = new MessageService()
+            messageService.getAllByRoomId(parseInt(roomId)).then(result => {
+                setMessages(result.data.data)
+            })
+        }, []
+    );
 
     const scrollToBottom = () => {
         messagesEndRef.current.scrollIntoView({ behavior: "smooth"});
@@ -25,7 +38,6 @@ const ChatRoom = () => {
             client.subscribe('/topic/message/' + roomName, (message) => {
                 const receivedData = JSON.parse(message.body);
                 setMessages((prevMessages) => [...prevMessages, receivedData]);
-                console.log(messages);
             });
         });
 
@@ -48,13 +60,13 @@ const ChatRoom = () => {
         }
 
         if (stompClient) {
-            let roomName = localStorage.getItem('room-name')
-            let username = localStorage.getItem('username')
+            let roomId = localStorage.getItem('room-id')
+            let userId = localStorage.getItem('id')
 
             const data = {
-                senderName: username,
-                message: messageInput,
-                roomName: roomName,
+                senderId: userId,
+                message: messageInput.trim(),
+                targetRoomId: roomId,
             };
             stompClient.send('/chat', {}, JSON.stringify(data));
             setMessageInput('');
@@ -63,13 +75,13 @@ const ChatRoom = () => {
 
     return (
         <div className='chat-box'>
-            <h1 className='c'>Chat Room</h1>
+            <h1 className='c'>Chatrom: {room}</h1>
             <div className="message-list">
                 {messages.map((msg, index) => (
                     <div className="card" key={index}>
                         <p className="card-title">{msg.senderName}</p>
                         <p className="small-desc">
-                           {msg.message}
+                           {msg.messageText}
                         </p>
                         <div className="go-corner">
                             <div className="go-arrow"/>

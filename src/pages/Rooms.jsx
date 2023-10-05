@@ -3,6 +3,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Button, Container, Form, Label } from 'semantic-ui-react'
 import * as Yup from 'yup'
+import { RoomService } from '../services/RoomService'
 
 
 
@@ -19,8 +20,13 @@ export default function Rooms() {
       roomName: Yup.string().required("Required")
     }),
     onSubmit: (values) => {
-      localStorage.setItem('room-name', JSON.stringify(values.roomName).slice(1, -1))
-      navigate('/chatroom')
+      localStorage.setItem('room-name', JSON.stringify(values.roomName).slice(1, -1).trim())
+      let roomService = new RoomService();
+      roomService.findRoomIdByRoomName(values.roomName).then(result => {
+        localStorage.setItem('room-id', JSON.stringify(result.data.data))
+        navigate('/chatroom')
+      })
+      
     }
     
   });
