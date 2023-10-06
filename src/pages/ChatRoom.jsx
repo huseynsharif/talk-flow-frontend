@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Stomp } from '@stomp/stompjs';
 import { SOCKET_BASE_URL } from '../constants/apiConstants';
 import { MessageService } from '../services/MessageService';
+import LeftMessage from '../elements/LeftMessage';
+import RightMessage from '../elements/RightMessage';
 
 const ChatRoom = () => {
 
@@ -10,20 +12,26 @@ const ChatRoom = () => {
     const [messageInput, setMessageInput] = useState('');
     const messagesEndRef = useRef(null);
     const [room, setRoom] = useState("");
+    const [userName, setUsername] = useState("")
 
     useEffect(
-        ()=> {
+        () => {
             setRoom(localStorage.getItem('room-name'))
             const roomId = localStorage.getItem('room-id')
             let messageService = new MessageService()
             messageService.getAllByRoomId(parseInt(roomId)).then(result => {
-                setMessages(result.data.data)
+                if (result.data.data) {
+                    setMessages(result.data.data)
+                }
+
             })
+
+            setUsername(localStorage.getItem('username'))
         }, []
     );
 
     const scrollToBottom = () => {
-        messagesEndRef.current.scrollIntoView({ behavior: "smooth"});
+        messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
     };
 
     useEffect(scrollToBottom, [messages]);
@@ -32,7 +40,6 @@ const ChatRoom = () => {
         const socket = new WebSocket(SOCKET_BASE_URL + '/chat');
         const client = Stomp.over(socket);
         client.connect({}, (frame) => {
-
             setStompClient(client)
             let roomName = localStorage.getItem('room-name')
             client.subscribe('/topic/message/' + roomName, (message) => {
@@ -75,18 +82,21 @@ const ChatRoom = () => {
 
     return (
         <div className='chat-box'>
-            <h1 className='c'>Chatrom: {room}</h1>
+            <h1 className='c'>Chatroom: {room}</h1>
             <div className="message-list">
                 {messages.map((msg, index) => (
-                    <div className="card" key={index}>
-                        <p className="card-title">{msg.senderName}</p>
-                        <p className="small-desc">
-                           {msg.messageText}
-                        </p>
-                        <div className="go-corner">
-                            <div className="go-arrow"/>
-                        </div>
-                    </div>
+                    msg.senderName == userName ? 
+                    <RightMessage
+                        key={index}
+                        senderName={msg.senderName}
+                        messageText={msg.messageText}
+                    />
+                    :
+                    <LeftMessage
+                        key={index}
+                        senderName={msg.senderName}
+                        messageText={msg.messageText}
+                    />
                 ))}
                 <div ref={messagesEndRef} />
             </div>

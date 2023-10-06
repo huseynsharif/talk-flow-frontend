@@ -5,7 +5,6 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: red;
 }
 
 code {
@@ -17,9 +16,6 @@ p {
   color: red;
 }
 
-/* #root{
-  background-color: aqua;
-} */
 
 .message-input {
   position: fixed;
@@ -353,6 +349,7 @@ p {
   margin: auto;
   box-shadow: inset 0px 0px 180px 5px #ffffff;
   border-radius: 20px;
+
 }
 
 /* Message-list-scroll */
@@ -402,12 +399,12 @@ p {
   /* box-shadow: inset 0px 0px 15px 1px #ffffff; */
 }
 
-.go-arrow {
-  margin-top: -4px;
-  margin-right: -4px;
-  color: white;
-  font-family: courier, sans;
-}
+/* .right{
+  right: 0;
+  border-radius: 0 4px 0 32px;
+} */
+
+
 
 .card {
   text-align: start;
@@ -415,18 +412,20 @@ p {
   position: relative;
   max-width: 50%;
   max-height: 320px;
-  background-color: #f2f8f9;
   border-radius: 10px;
   padding: 5px 15px;
   margin: 12px;
   text-decoration: none;
   z-index: 0;
   overflow: hidden;
-  /* background: linear-gradient(to bottom, #6b589c, #544f99); */
   background-color: #2b2c35;
   background: linear-gradient(135deg, #250a57, #1d0d75);
   box-shadow: 0px 0px 9px 1px #2b0063;
   font-family: Arial, Helvetica, sans-serif;
+}
+
+.right{
+  margin-left: 50%;
 }
 
 @media (width <=767px) {
@@ -452,3 +451,7 @@ p {
   transform-origin: 50% 50%;
   transition: transform 0.35s ease-out;
 }
+
+/* .right:before{
+  left: -16px;
+} */
