@@ -41,4 +41,23 @@ export class UserService {
             throw error;
         }
     }
+
+    verifyAccountWithLink(value) {
+        try {
+            console.log(value);
+            const response = axios.get(
+                API_BASE_URL + `/users/verificate-user-with-link?userId=${value.userId}&token=${value.token}`,
+                {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }
+            );
+            
+            return response;
+            
+        } catch (error) {
+            throw error;
+        }
+    }
 }

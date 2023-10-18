@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import * as Yup from 'yup'
 import { Container, Form, Label } from 'semantic-ui-react'
 import { UserService } from '../services/UserService';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Loading from '../elements/Loading';
 
 export default function LogIn() {
@@ -71,6 +71,7 @@ export default function LogIn() {
         </Form.Field>
       
           <button type='submit' disabled={isLoading} className='login-signup-submit-button'> <span>Login</span></button>
+          <br/> <Link to={"/forgot-password"}>Forgot password?</Link>
         {!loginResult.success ? <p>{loginResult.message}</p> : null}
 
         {isLoading ? <Loading /> : null}  {/*ishlemir*/}
