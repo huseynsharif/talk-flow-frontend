@@ -1,7 +1,7 @@
 import { useFormik } from 'formik';
 import React, { useState } from 'react'
 import * as Yup from 'yup'
-import { Button, Container, Form, Label } from 'semantic-ui-react'
+import { Container, Form, Label } from 'semantic-ui-react'
 import { UserService } from '../services/UserService';
 import { useNavigate } from 'react-router-dom';
 
@@ -25,8 +25,12 @@ export default function SignUp() {
             validationSchema: Yup.object({
                 username: Yup.string().min(2, "Must be 2 character or more.").max(15, "Must be 15 character or less.").required("Required"),
                 email: Yup.string().email("Invalid email adress.").required("Required"),
-                password: Yup.string().required("Required"),
-                cpassword: Yup.string().required("Required")
+                password: Yup.string()
+                .oneOf([Yup.ref('cpassword')], "Passwords must be same.")
+                .required("Required"),
+                cpassword: Yup.string()
+                .oneOf([Yup.ref('password')], "Passwords must be same.")
+                .required("Required")
             }),
             onSubmit:  (values) => {
                 setIsLoading(true)

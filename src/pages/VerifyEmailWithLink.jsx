@@ -22,7 +22,7 @@ export default function VerifyEmailWithLink() {
 
   return (
     <div>
-      {verifResult.isSuccess ? <h1>You have been verified.</h1> : <h1>You have not been verified</h1>}
+      {verifResult.success ? <h1>You have been verified.</h1> : <h1>You have not been verified</h1>}
     </div>
   )
 }

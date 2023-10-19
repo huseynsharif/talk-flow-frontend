@@ -10,6 +10,7 @@ import Rooms from '../pages/Rooms'
 import ChatRoom from '../pages/ChatRoom'
 import VerifyEmailWithLink from '../pages/VerifyEmailWithLink'
 import ForgotPassword from '../pages/forgotPassword/ForgotPassword'
+import NewPassword from '../pages/forgotPassword/NewPassword'
 
 export default function Dashboard() {
   return (
@@ -27,6 +28,7 @@ export default function Dashboard() {
         <Route path="chatroom" Component={ChatRoom} />
         <Route path='/verificate-user-with-link/:userId/:token' Component={VerifyEmailWithLink}/>
         <Route path='/forgot-password' Component={ForgotPassword}/>
+        <Route path='/new-password/:userId/:token' Component={NewPassword}/>
         
       </Routes>
 

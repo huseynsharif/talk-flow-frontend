@@ -44,7 +44,6 @@ export class UserService {
 
     verifyAccountWithLink(value) {
         try {
-            console.log(value);
             const response = axios.get(
                 API_BASE_URL + `/users/verificate-user-with-link?userId=${value.userId}&token=${value.token}`,
                 {
@@ -52,6 +51,38 @@ export class UserService {
                         'Content-Type': 'application/json'
                     }
                 }
+            );
+            
+            return response;
+            
+        } catch (error) {
+            throw error;
+        }
+    }
+
+
+    forgotPasswordEmailVerification(email) {
+        try {
+            const response = axios.post(
+                API_BASE_URL + `/users/send-forgot-password-email?email=${email}`,
+                {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }
+            );
+            
+            return response;
+            
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    restorePassword(value) {
+        try {
+            const response = axios.post(
+                API_BASE_URL + `/users/restore-password`, value
             );
             
             return response;
