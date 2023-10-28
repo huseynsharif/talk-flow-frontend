@@ -34,9 +34,9 @@ export class UserService {
                 API_BASE_URL + "/auth/login",
                 loginRequest
             );
-            
+
             return response;
-            
+
         } catch (error) {
             throw error;
         }
@@ -52,9 +52,9 @@ export class UserService {
                     }
                 }
             );
-            
+
             return response;
-            
+
         } catch (error) {
             throw error;
         }
@@ -71,9 +71,9 @@ export class UserService {
                     }
                 }
             );
-            
+
             return response;
-            
+
         } catch (error) {
             throw error;
         }
@@ -84,9 +84,9 @@ export class UserService {
             const response = axios.post(
                 API_BASE_URL + `/users/restore-password`, value
             );
-            
+
             return response;
-            
+
         } catch (error) {
             throw error;
         }

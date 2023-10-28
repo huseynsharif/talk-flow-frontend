@@ -18,18 +18,18 @@ export default function Dashboard() {
 
       <Navi />
       <Routes >
-        
+
         <Route path="signup" Component={SignUp} />
         <Route path="login" Component={LogIn} />
         <Route path="homepage" Component={Homepage} />
-        <Route path="rooms" Component={Rooms} />        
+        <Route path="rooms" Component={Rooms} />
         <Route path="/" Component={Homepage} />
         <Route path="*" Component={NotFoundPage} />
         <Route path="chatroom" Component={ChatRoom} />
-        <Route path='/verificate-user-with-link/:userId/:token' Component={VerifyEmailWithLink}/>
-        <Route path='/forgot-password' Component={ForgotPassword}/>
-        <Route path='/new-password/:userId/:token' Component={NewPassword}/>
-        
+        <Route path='/verificate-user-with-link/:userId/:token' Component={VerifyEmailWithLink} />
+        <Route path='/forgot-password' Component={ForgotPassword} />
+        <Route path='/new-password/:userId/:token' Component={NewPassword} />
+
       </Routes>
 
     </div>

@@ -3,15 +3,14 @@ import React, { useState } from 'react'
 import * as Yup from 'yup'
 import { Container, Form, Label } from 'semantic-ui-react'
 import { UserService } from '../services/UserService';
-import { useNavigate } from 'react-router-dom';
 
 
 export default function SignUp() {
 
     const userService = new UserService();
-    const navigate = useNavigate();
     let [data, setData] = useState({ success: false, message: "", data: {} });
     const [isLoading, setIsLoading] = useState(false);
+    const [showMessage, setShowMessage] = useState(false)
 
 
     const formik = useFormik(
@@ -26,26 +25,25 @@ export default function SignUp() {
                 username: Yup.string().min(2, "Must be 2 character or more.").max(15, "Must be 15 character or less.").required("Required"),
                 email: Yup.string().email("Invalid email adress.").required("Required"),
                 password: Yup.string()
-                .oneOf([Yup.ref('cpassword')], "Passwords must be same.")
-                .required("Required"),
+                    .oneOf([Yup.ref('cpassword')], "Passwords must be same.")
+                    .required("Required"),
                 cpassword: Yup.string()
-                .oneOf([Yup.ref('password')], "Passwords must be same.")
-                .required("Required")
+                    .oneOf([Yup.ref('password')], "Passwords must be same.")
+                    .required("Required")
             }),
-            onSubmit:  (values) => {
+            onSubmit: (values) => {
                 setIsLoading(true)
                 userService.addUser(values).then(result => {
 
                     setData(result.data)
                     setIsLoading(false)
                     if (result.data.success) {
-                        navigate("/login")
+                        setShowMessage(true)
                     }
                 })
             }
         }
     )
-
 
     return (
         <div> <Container style={{ display: "flex", justifyContent: "center", marginTop: "20px", marginBottom: "200px" }}>
@@ -72,7 +70,6 @@ export default function SignUp() {
                         onChange={formik.handleChange}
                         value={formik.values.email}
                         onBlur={formik.handleBlur}
-
                     />
                     {formik.touched.email && formik.errors.email ? <Label pointing basic color='red' mini>{formik.errors.email}</Label> : null}
                 </Form.Field>
@@ -85,7 +82,6 @@ export default function SignUp() {
                         onChange={formik.handleChange}
                         value={formik.values.password}
                         onBlur={formik.handleBlur}
-
                     />
                     {formik.touched.password && formik.errors.password ? <Label pointing basic color='red' mini>{formik.errors.password}</Label> : null}
                 </Form.Field>
@@ -98,16 +94,13 @@ export default function SignUp() {
                         onChange={formik.handleChange}
                         value={formik.values.cpassword}
                         onBlur={formik.handleBlur}
-
                     />
                     {formik.touched.cpassword && formik.errors.cpassword ? <Label pointing basic color='red' mini >{formik.errors.cpassword}</Label> : null}
                 </Form.Field>
                 <button type='submit' disabled={isLoading} className='login-signup-submit-button'> <span>Sign up</span></button>
                 {!data.success ? <p>{data.message}</p> : null}
-
-
+                {showMessage && <Label color='green' >We sent verification link to your email. <br/> Please, click the link to verify your account</Label>}
             </Form>
-
         </Container>
         </div>
     )

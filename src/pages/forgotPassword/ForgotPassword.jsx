@@ -9,7 +9,7 @@ export default function ForgotPassword() {
   const [isLoading, setIsLoading] = useState(false);
   const [showMessage, setShowMessage] = useState(false)
 
-  const sendEmail = ()=>{
+  const sendEmail = () => {
     console.log(email);
     let userService = new UserService()
     userService.forgotPasswordEmailVerification(email).then(result => setResult(result.data))
@@ -26,12 +26,12 @@ export default function ForgotPassword() {
             placeholder='email'
             type='email'
             onChange={(value) => setEmail(value.target.value)}
-            // value={email}
+          // value={email}
           />
         </Form.Field>
         <button type='submit' onClick={sendEmail} disabled={isLoading} className='login-signup-submit-button'> <span>Send email</span></button>
         {!result.success ? <p>{result.message}</p> : null}
-        {showMessage && <Label color='green' basic active={false}>We sent link to your email.</Label>}
+        {showMessage && <Label color='green' basic >We sent link to your email.</Label>}
       </Form>
 
     </Container></div>

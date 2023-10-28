@@ -85,18 +85,18 @@ const ChatRoom = () => {
             <h1 className='c'>Chatroom: {room}</h1>
             <div className="message-list">
                 {messages.map((msg, index) => (
-                    msg.senderName == userName ? 
-                    <RightMessage
-                        key={index}
-                        senderName={msg.senderName}
-                        messageText={msg.messageText}
-                    />
-                    :
-                    <LeftMessage
-                        key={index}
-                        senderName={msg.senderName}
-                        messageText={msg.messageText}
-                    />
+                    msg.senderName == userName ?
+                        <RightMessage
+                            key={index}
+                            senderName={msg.senderName}
+                            messageText={msg.messageText}
+                        />
+                        :
+                        <LeftMessage
+                            key={index}
+                            senderName={msg.senderName}
+                            messageText={msg.messageText}
+                        />
                 ))}
                 <div ref={messagesEndRef} />
             </div>
